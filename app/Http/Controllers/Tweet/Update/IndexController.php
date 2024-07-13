@@ -12,10 +12,10 @@ class IndexController extends Controller
     /**
      * Handle the incoming request.
      */
-    public function __invoke(Request $request)
+    public function __invoke(Request $request, TweetService $tweetService)
     {
-        $tweetId = (int) $request->route('tweetId');
-        $tweet = Tweet::where('id', $tweetId)->firstOrFail();
-        return view('tweet.update')->with('tweet', $tweet);
+        $tweets = $tweetService->getTweets();
+        return view('tweet.index')
+            ->with('tweets', $tweets);
     }
 }
